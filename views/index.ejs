@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #f5f1e8;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 35px, rgba(139, 69, 19, 0.03) 35px, rgba(139, 69, 19, 0.03) 36px),
+                repeating-linear-gradient(90deg, transparent, transparent 35px, rgba(139, 69, 19, 0.03) 35px, rgba(139, 69, 19, 0.03) 36px);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #3e2723;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: #fff;
+            padding: 30px 40px;
+            border: 3px solid #8d6e63;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 0 #8d6e63, 0 8px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        h1 {
+            color: #4e342e;
+            font-size: 2.5rem;
+            font-weight: normal;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-bottom: 3px double #8d6e63;
+            padding-bottom: 10px;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 12px 30px;
+            font-weight: normal;
+            transition: all 0.2s ease;
+            display: inline-block;
+            cursor: pointer;
+            border: 2px solid;
+            font-size: 1rem;
+            font-family: 'Georgia', serif;
+            letter-spacing: 1px;
+        }
+
+        .btn-add {
+            background: #8d6e63;
+            color: #fff;
+            border-color: #6d4c41;
+            box-shadow: 0 3px 0 #6d4c41;
+        }
+
+        .btn-add:hover {
+            background: #6d4c41;
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 #6d4c41;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: #fff;
+            border: 2px solid #8d6e63;
+            padding: 20px;
+            box-shadow: 5px 5px 0 #d7ccc8;
+            transition: all 0.2s ease;
+        }
+
+        .product-card:hover {
+            box-shadow: 8px 8px 0 #d7ccc8;
+            transform: translate(-3px, -3px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 15px;
+            background: #efebe9;
+            border: 3px solid #8d6e63;
+            filter: sepia(20%);
+        }
+
+        .no-image {
+            height: 200px;
+            background: #efebe9;
+            border: 3px dashed #8d6e63;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: #8d6e63;
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        .product-name {
+            font-size: 1.4rem;
+            color: #4e342e;
+            font-weight: bold;
+            margin-bottom: 12px;
+            text-transform: capitalize;
+            border-bottom: 2px solid #d7ccc8;
+            padding-bottom: 8px;
+        }
+
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #fafafa;
+            border: 1px solid #d7ccc8;
+        }
+
+        .product-price {
+            color: #6d4c41;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .product-quantity {
+            color: #5d4037;
+            font-size: 0.95rem;
+            background: #efebe9;
+            padding: 5px 10px;
+            border: 1px solid #bcaaa4;
+        }
+
+        .product-quantity strong {
+            color: #4e342e;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-edit {
+            background: #a1887f;
+            color: white;
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9rem;
+            border: 2px solid #8d6e63;
+            box-shadow: 0 2px 0 #6d4c41;
+        }
+
+        .btn-edit:hover {
+            background: #8d6e63;
+            transform: translateY(1px);
+            box-shadow: 0 1px 0 #6d4c41;
+        }
+
+        .btn-delete {
+            background: #a1887f;
+            color: white;
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9rem;
+            border: 2px solid #8d6e63;
+            box-shadow: 0 2px 0 #6d4c41;
+        }
+
+        .btn-delete:hover {
+            background: #795548;
+            transform: translateY(1px);
+            box-shadow: 0 1px 0 #6d4c41;
+        }
+
+        .empty-state {
+            background: #fff;
+            border: 3px solid #8d6e63;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 5px 5px 0 #d7ccc8;
+        }
+
+        .empty-state h2 {
+            color: #4e342e;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            font-weight: normal;
+        }
+
+        .empty-state p {
+            color: #6d4c41 !important;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Product Catalogue</h1>
+        <a href="/add" class="btn btn-add">+ Add New Item</a>
+    </header>
+
+    <% if (products.length === 0) { %>
+        <div class="empty-state">
+            <h2>No Products Found</h2>
+            <p style="margin-bottom: 25px; font-style: italic;">The catalogue is currently empty. Add your first product to begin.</p>
+            <a href="/add" class="btn btn-add">Add Product</a>
+        </div>
+    <% } else { %>
+        <div class="products-grid">
+            <% products.forEach(product => { %>
+                <div class="product-card">
+                    <% if (product.url_image) { %>
+                        <img src="<%= product.url_image %>" class="product-image" alt="<%= product.name %>" />
+                    <% } else { %>
+                        <div class="no-image">No Image</div>
+                    <% } %>
+                    
+                    <div class="product-name"><%= product.name %></div>
+                    
+                    <div class="product-details">
+                        <div class="product-price">$<%= product.price %></div>
+                        <div class="product-quantity"><strong>Qty:</strong> <%= product.quantity %></div>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <a href="/edit/<%= product.id %>" class="btn btn-edit">Edit</a>
+                        <a href="/delete/<%= product.id %>" 
+                           class="btn btn-delete"
+                           onclick="return confirm('Are you sure you want to delete this product?')">
+                           Delete
+                        </a>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+</div>
+
+</body>
+</html>
