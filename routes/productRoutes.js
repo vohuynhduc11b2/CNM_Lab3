@@ -116,7 +116,7 @@ router.get("/edit/:id", async (req, res) => {
 /* =========================
    5. UPDATE SẢN PHẨM
 ========================= */
-router.post("/edit/:id", upload.single("image"), async (req, res) => {
+router.put("/edit/:id", upload.single("image"), async (req, res) => {
   try {
     const { id } = req.params;
     const { name, price, quantity } = req.body;
